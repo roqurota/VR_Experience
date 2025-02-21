@@ -30,7 +30,7 @@ export default function Experience(){
         {/* box */}
         <mesh position-x={3} >
             <boxGeometry />
-            <meshBasicMaterial color={'red'}/>
+            <meshBasicMaterial color={'blue'}/>
         </mesh>
     </>
 }
