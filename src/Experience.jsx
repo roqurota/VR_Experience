@@ -27,7 +27,7 @@ export default function Experience(){
         
         <mesh >
             <sphereGeometry />
-            <meshBasicMaterial color={'orange'}/>
+            <meshBasicMaterial color={'green'}/>
         </mesh>
         
         <mesh ref={cube} position-x={3} >
