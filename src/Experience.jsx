@@ -1,38 +1,35 @@
-import { useFrame } from "@react-three/fiber"
 import { useRef } from "react"
+import { OrbitControls, useHelper, useGLTF, Environment } from "@react-three/drei"
+import Chair from "./Chair";
 
 
 export default function Experience(){
-    const torus = useRef();
-    const sphere = useRef();
-    const cube = useRef();
 
-    useFrame((state, delta) => {
-        torus.current.rotation.y += delta;
-        cube.current.rotation.x += delta;
-        cube.current.rotation.y += delta;
-    })
+    const directionalLight = useRef();
+
+    const table = useGLTF('./table.gltf')
 
     return <>
-        
-        <mesh position-y={-1} scale={10} rotation-x={Math.PI * 0.5}>
-            <planeGeometry scale={10}/>
-            <meshBasicMaterial color={'green'}/>
+        <OrbitControls makeDefault />
+
+        <directionalLight ref={directionalLight} position={[2, 2, 3]} intensity={ 2 } />
+        <ambientLight intensity={0.5} />
+
+        <Environment files="./golf.hdr" background/>
+
+        <mesh position-y={0} scale={10} rotation-x={ -Math.PI * 0.5 }>
+            <planeGeometry />
+            <meshBasicMaterial color="greenyellow"/>
         </mesh>
-        
-        <mesh ref={torus} position-x={-3}>
-            <torusKnotGeometry  />
-            <meshNormalMaterial />
-        </mesh>
-        
-        <mesh >
-            <sphereGeometry />
-            <meshBasicMaterial color={'green'}/>
-        </mesh>
-        
-        <mesh ref={cube} position-x={3} >
-            <boxGeometry />
-            <meshBasicMaterial color={'blue'}/>
-        </mesh>
+
+        <group position-x={2.5} rotation-y={-Math.PI * 0.5}>
+            <Chair/>
+        </group>
+
+        <group position-x={-2.5} rotation-y={Math.PI * 0.5}>
+            <Chair/>
+        </group>
+
+        <primitive object={table.scene} />
     </>
 }
