@@ -14,7 +14,9 @@ export default function Experience(){
     function cubeClick(event) {
         const cubePosition = event.object.position;
 
-        setXRPosition(cubePosition);
+        console.log('cubePosition: ', cubePosition)
+
+        setXRPosition(new Vector3(cubePosition.x, cubePosition.y + 1, cubePosition.z));
     }
 
     return <>
