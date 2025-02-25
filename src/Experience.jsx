@@ -8,7 +8,7 @@ import { Vector3 } from "three";
 
 export default function Experience(){
     const directionalLight = useRef();
-    const [XRPosition, setXRPosition] = useState([0,0,6])
+    const [XRPosition, setXRPosition] = useState([3,3,6])
     const camera = useRef();
 
     function cubeClick(event) {
