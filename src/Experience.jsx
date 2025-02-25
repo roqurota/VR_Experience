@@ -1,35 +1,34 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import { useXR, XROrigin } from "@react-three/xr";
 import { OrbitControls, useHelper, useGLTF, Environment } from "@react-three/drei"
 import Chair from "./Chair";
+import Cube from "./Cube";
+import { Vector3 } from "three";
 
 
 export default function Experience(){
-
     const directionalLight = useRef();
+    const [XRPosition, setXRPosition] = useState([0,0,6])
+    const camera = useRef();
 
-    const table = useGLTF('./table.gltf')
+    function cubeClick(event) {
+        const cubePosition = event.object.position;
+
+        setXRPosition(cubePosition);
+    }
 
     return <>
-        <OrbitControls makeDefault />
+        <OrbitControls ref={camera} makeDefault />
 
-        <directionalLight ref={directionalLight} position={[2, 2, 3]} intensity={ 2 } />
-        <ambientLight intensity={0.5} />
+        <XROrigin position={XRPosition} />
 
-        <Environment files="./golf.hdr" background/>
+        <directionalLight ref={directionalLight} position={[0, 3, 0]} intensity={ 2 } />
+        <ambientLight intensity={1} />
 
-        <mesh position-y={0} scale={10} rotation-x={ -Math.PI * 0.5 }>
-            <planeGeometry />
-            <meshBasicMaterial color="greenyellow"/>
-        </mesh>
+        <Cube onClick={cubeClick} color="red" position={[0, 1, 1]} />
+        <Cube onClick={cubeClick} color="blue" position={[3, 0, 3]} />
+        <Cube onClick={cubeClick} color="purple" position={[-3, 0, 1]} />
 
-        <group position-x={2.5} rotation-y={-Math.PI * 0.5}>
-            <Chair/>
-        </group>
-
-        <group position-x={-2.5} rotation-y={Math.PI * 0.5}>
-            <Chair/>
-        </group>
-
-        <primitive object={table.scene} />
+        <Environment files="./space.hdr" background/>
     </>
 }
