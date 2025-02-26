@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <button onClick={() => store.enterAR()}>Enter AR</button>
-      <Canvas>
+      <Canvas camera={{ position:[1, 2, 2.5] }}>
         <XR store={store}>
           <Experience />
         </XR>
