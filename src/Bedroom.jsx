@@ -1,6 +1,8 @@
-import { Clone, Cloud, Clouds, useGLTF, Sky, Stars } from '@react-three/drei'
+import { Clone, Cloud, Clouds, useGLTF, Sky, Stars, Edges, Html } from '@react-three/drei'
+import { XRDomOverlay } from '@react-three/xr';
 import { useRef } from 'react';
 import * as THREE from 'three'
+import Menu from './Menu';
 
 export default function Bedroom() {
     const bookcase = useGLTF('./bookcase.gltf');
@@ -35,12 +37,14 @@ export default function Bedroom() {
     }
 
     return <>
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+        {/* <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <Sky distance={450000} sunPosition={[0, 1, 0]} inclination={0} azimuth={0.25} />
 
         <Clouds position={[0, 4, 0]} material={THREE.MeshBasicMaterial}>
             <Cloud seed={1} segments={40} bounds={[3, 1, 3]} volume={1} speed={.5} color="lightblue"/>
-        </Clouds>
+        </Clouds> */}
+
+        <Menu />
 
         <mesh scale={10} rotation-x={-Math.PI * 0.5}>
             <planeGeometry />
@@ -50,6 +54,13 @@ export default function Bedroom() {
         <mesh ref={frame} position={[0, -1, 0]}>
             <boxGeometry />
             <meshStandardMaterial color={'red'} wireframe={true}/>
+
+            <Edges
+                linewidth={4}
+                scale={1.1}
+                threshold={15} // Display edges only when the angle between two faces exceeds this value (default=15 degrees)
+                color="white"
+            />
         </mesh>
 
         <Clone scale={.8} position={[.6, 0, -1.2]} object={bookcase.scene} />
@@ -61,13 +72,11 @@ export default function Bedroom() {
             onClick={onClick} 
         />
 
-        <mesh>
-            <Clone scale={.6} position={[-.3, .3, .5]} object={crate.scene} 
-                onPointerEnter={onPointerEnter}
-                onPointerLeave={onPointerLeave}
-                onClick={onClick}
-            />
-        </mesh>
+        <Clone scale={.6} position={[-.3, .3, .5]} object={crate.scene} 
+            onPointerEnter={onPointerEnter}
+            onPointerLeave={onPointerLeave}
+            onClick={onClick}
+        />
 
         <Clone scale={.3} position={[-.3, .6, .5]} rotation-y={-Math.PI * .5 - 90} object={toy.scene} 
             onPointerEnter={onPointerEnter}

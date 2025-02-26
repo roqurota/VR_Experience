@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/drei": "^10.0.1",
     "@react-three/fiber": "^9.0.4",
+    "@react-three/uikit": "^0.8.7",
     "@react-three/xr": "^6.6.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

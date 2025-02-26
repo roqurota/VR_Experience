@@ -5,3 +5,28 @@ canvas {
     right: 0;
     bottom: 0;
 }
+
+.menu {
+    padding: .5em;
+    border-radius: .5em;
+    background-color: white;
+    user-select: none;
+    border: 1px solid black;
+}
+
+.menu-item {
+    cursor: pointer;
+    border-radius: .2em;
+    padding: .3em;
+    background-color: lightgray;
+    transition: background-color .1s ease;
+    margin-bottom: .1em;
+}
+
+.menu-item:last-child {
+    margin-bottom: 0;
+}
+
+.menu-item:hover {
+    background-color: gray;
+}
