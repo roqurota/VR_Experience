@@ -39,7 +39,7 @@ export default function Bedroom() {
         <Sky distance={450000} sunPosition={[0, 1, 0]} inclination={0} azimuth={0.25} />
 
         <Clouds position={[0, 4, 0]} material={THREE.MeshBasicMaterial}>
-            <Cloud seed={1} segments={40} bounds={[3, 1, 3]} volume={1} speed={.5} color="white"/>
+            <Cloud seed={1} segments={40} bounds={[3, 1, 3]} volume={1} speed={.5} color="lightblue"/>
         </Clouds>
 
         <mesh scale={10} rotation-x={-Math.PI * 0.5}>
