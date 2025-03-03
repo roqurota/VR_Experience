@@ -1,9 +1,11 @@
 import { useRef, useState } from "react"
 import { useXR, XROrigin, useXRInputSourceState} from "@react-three/xr";
 import { OrbitControls, useHelper, useGLTF, Environment, Stars, Sky, Clouds, Cloud } from "@react-three/drei"
+import { RigidBody } from "@react-three/rapier";
 import Bedroom from "./Bedroom";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
+import UserMovement from "./UserMovement";
 
 
 export default function Experience(){
@@ -121,10 +123,14 @@ export default function Experience(){
           if (leftThumstickState == null) {
             return
           }
+
+        //   console.log(ref.current)
+
+        //   ref.current.applyImpulse({x: .5, y: 0, z: 0})
         
           // Move
-          ref.current.position.x += (leftThumstickState.xAxis ?? 0) * delta
-          ref.current.position.z += (leftThumstickState.yAxis ?? 0) * delta
+        //   ref.current.position.x += (leftThumstickState.xAxis ?? 0) * delta
+        //   ref.current.position.z += (leftThumstickState.yAxis ?? 0) * delta
 
           if (rightThumstickState == null) {
             return
@@ -142,7 +148,9 @@ export default function Experience(){
         <directionalLight ref={directionalLight} position={[0, 3, 0]} intensity={ 2 } />
         <ambientLight intensity={1} />
 
-        <Locomotion />
+        {/* <Locomotion /> */}
+
+        <UserMovement />
 
         <group scale={.5} ref={player} position={[0, -.5, 1]}>
             
