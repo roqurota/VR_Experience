@@ -105,18 +105,33 @@ export default function Experience(){
     // })
 
     function Locomotion() {
-        const controller = useXRInputSourceState('controller', 'right')
+        const rightController = useXRInputSourceState('controller', 'right');
+        const leftController = useXRInputSourceState('controller', 'left');
         const ref = useRef(null)
         useFrame((_, delta) => {
-          if (ref.current == null || controller == null) {
+          if (ref.current == null || 
+              rightController == null ||
+              leftController === null) {
             return
           }
-          const thumstickState = controller.gamepad['xr-standard-thumbstick']
-          if (thumstickState == null) {
+
+          const leftThumstickState = leftController.gamepad['xr-standard-thumbstick']
+          const rightThumstickState = rightController.gamepad['xr-standard-thumbstick']
+
+          if (leftThumstickState == null) {
             return
           }
-          ref.current.position.x += (thumstickState.xAxis ?? 0) * delta
-          ref.current.position.z += (thumstickState.yAxis ?? 0) * delta
+        
+          // Move
+          ref.current.position.x += (leftThumstickState.xAxis ?? 0) * delta
+          ref.current.position.z += (leftThumstickState.yAxis ?? 0) * delta
+
+          if (rightThumstickState == null) {
+            return
+          }
+
+          // Rotation
+          ref.current.rotation.y += (rightThumstickState.xAxis ?? 0) * delta
         })
         return <XROrigin ref={ref} />
       }

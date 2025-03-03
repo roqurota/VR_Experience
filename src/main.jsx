@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
-import { XR, XROrigin, createXRStore } from '@react-three/xr'
+import { XR, XROrigin, createXRStore, useXRInputSourceStateContext, DefaultXRController } from '@react-three/xr'
 import { useState } from 'react'
 import Experience from './Experience'
 import './App.css'

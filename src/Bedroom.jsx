@@ -38,6 +38,7 @@ export default function Bedroom({coordinates, rotation, npc, name}) {
         if (!item)
             return;
 
+        // Tooltip box
         if (item.name) {
             if (item.name === 'message-box') {
                 setTooltipVisibility(!tooltipVisible)
