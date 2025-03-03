@@ -4,6 +4,6 @@ import { XROrigin, useXRControllerLocomotion } from "@react-three/xr";
 
 export default function UserMovement() {
     const originRef = useRef(THREE.Group);
-    useXRControllerLocomotion(originRef);
+    useXRControllerLocomotion(originRef, {}, { type: 'smooth' });
     return <XROrigin ref={originRef} />
 }
