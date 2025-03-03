@@ -133,16 +133,16 @@ export default function Experience(){
             
         </group>
 
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+        {/* <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <Sky distance={450000} sunPosition={[0, 1, 0]} inclination={0} azimuth={0.25} />
 
         <Clouds position={[-.5, 4, 1.5]} material={THREE.MeshBasicMaterial}>
             <Cloud seed={1} segments={40} bounds={[3, 1, 3]} volume={1} speed={.5} color="lightblue"/>
-        </Clouds>
+        </Clouds> */}
 
         {
-            rooms.map(room => {
-                return <Bedroom {...room} />
+            rooms.map((room, index) => {
+                return <Bedroom key={index} {...room} />
             })
         }
 

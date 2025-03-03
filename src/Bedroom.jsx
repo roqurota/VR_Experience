@@ -1,5 +1,5 @@
-import { Clone, useGLTF, Text3D, Center, Float } from '@react-three/drei'
-import { useRef, useEffect } from 'react';
+import { Clone, useGLTF, Text3D, Center, Float, Html } from '@react-three/drei'
+import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three'
 import Menu from './Menu';
 import NPC from './NPC';
@@ -13,6 +13,8 @@ export default function Bedroom({coordinates, rotation, npc, name}) {
     const door = useGLTF('./door.gltf');
 
     const frame = useRef(null);
+    const tooltip = useRef(null);
+    const [tooltipVisible, setTooltipVisibility] = useState(false);
 
     function onPointerEnter(event) {
         const item = event.eventObject;
@@ -35,6 +37,12 @@ export default function Bedroom({coordinates, rotation, npc, name}) {
 
         if (!item)
             return;
+
+        if (item.name) {
+            if (item.name === 'message-box') {
+                setTooltipVisibility(!tooltipVisible)
+            }
+        }
     }
 
     return <group position={coordinates.room} rotation={[rotation.x, rotation.y, rotation.z]}>
@@ -52,6 +60,20 @@ export default function Bedroom({coordinates, rotation, npc, name}) {
                     </Text3D>
                 </Center>
             </Float>
+        </group>
+
+        <group position={[1, .15, 1]}>
+            <mesh name='message-box' scale={.3} onClick={onClick}>
+                <boxGeometry />
+                <meshStandardMaterial color={tooltipVisible ? 'blue' : 'orange'}/>
+            </mesh>
+            <Html center ref={tooltip} position={[0, .4, 0]}>
+                <div style={{ display: tooltipVisible ? 'block' : 'none' }} className='message-box'>
+                    <span>
+                        You are in the {name}
+                    </span>
+                </div>
+            </Html>
         </group>
 
         {/* <mesh ref={frame} position={[0, -1, 0]}>

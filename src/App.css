@@ -30,3 +30,15 @@ canvas {
 .menu-item:hover {
     background-color: gray;
 }
+
+.message-box {
+    background-color: antiquewhite;
+    user-select: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-wrap: nowrap;
+}
+
+.message-box .button {
+
+}
