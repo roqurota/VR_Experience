@@ -1,11 +1,11 @@
 import { useRef, useState } from "react"
 import { useXR, XROrigin, useXRInputSourceState} from "@react-three/xr";
 import { OrbitControls, useHelper, useGLTF, Environment, Stars, Sky, Clouds, Cloud } from "@react-three/drei"
-import { RigidBody } from "@react-three/rapier";
 import Bedroom from "./Bedroom";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
 import UserMovement from "./UserMovement";
+import { Fullscreen, Container } from "@react-three/uikit";
 
 
 export default function Experience(){

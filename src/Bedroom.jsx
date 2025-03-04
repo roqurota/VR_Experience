@@ -52,7 +52,7 @@ export default function Bedroom({coordinates, rotation, npc, name}) {
             <meshStandardMaterial side={THREE.DoubleSide} color="lightblue" />
         </mesh>
 
-        <group position={[0, 1.5, -.8]}>
+        <group position={[0, 2, -1]}>
             <Float>
                 <Center>
                     <Text3D scale={.3} font={'./fonts/font.json'}>
@@ -63,19 +63,7 @@ export default function Bedroom({coordinates, rotation, npc, name}) {
             </Float>
         </group>
 
-        <group position={[1, .15, 1]}>
-            <mesh name='message-box' scale={.3} onClick={onClick}>
-                <boxGeometry />
-                <meshStandardMaterial color={tooltipVisible ? 'blue' : 'orange'}/>
-            </mesh>
-            <Html center ref={tooltip} position={[0, .4, 0]}>
-                <div style={{ display: tooltipVisible ? 'block' : 'none' }} className='message-box'>
-                    <span>
-                        You are in the {name}
-                    </span>
-                </div>
-            </Html>
-        </group>
+        <Menu />
 
         {/* <mesh ref={frame} position={[0, -1, 0]}>
             <boxGeometry />
