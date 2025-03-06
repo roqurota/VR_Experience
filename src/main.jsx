@@ -4,18 +4,28 @@ import { XR, XROrigin, createXRStore, useXRInputSourceStateContext, DefaultXRCon
 import { useState } from 'react'
 import Experience from './Experience'
 import './App.css'
+import { KeyboardControls } from '@react-three/drei'
 
 const store = createXRStore()
 
 function App() {
   return (
     <>
-      <button onClick={() => store.enterAR()}>Enter AR</button>
-      <Canvas camera={{ position:[1, 2, 2.5] }}>
-        <XR store={store}>
-          <Experience />
-        </XR>
-      </Canvas>
+      {/* <button onClick={() => store.enterAR()}>Enter AR</button> */}
+      <KeyboardControls 
+        map={[
+          { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
+          { name: 'backward', keys: ['ArrowDown', 'KeyS'] },
+          { name: 'leftward', keys: ['ArrowLeft', 'KeyA'] },
+          { name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
+        ]}
+      >
+        <Canvas camera={{ position:[6, 6, 6] }}>
+          <XR store={store}>
+            <Experience />
+          </XR>
+        </Canvas>
+      </ KeyboardControls>
     </>
   )
 }

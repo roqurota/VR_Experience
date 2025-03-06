@@ -1,11 +1,14 @@
 import { useRef, useState } from "react"
 import { useXR, XROrigin, useXRInputSourceState} from "@react-three/xr";
-import { OrbitControls, useHelper, useGLTF, Environment, Stars, Sky, Clouds, Cloud } from "@react-three/drei"
+import { OrbitControls, useHelper, useGLTF, Environment, Stars, Sky, Clouds, Cloud, Circle, Plane } from "@react-three/drei"
 import Bedroom from "./Bedroom";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
 import UserMovement from "./UserMovement";
 import { Fullscreen, Container } from "@react-three/uikit";
+import { Physics, RigidBody } from "@react-three/rapier";
+import Player from "./Player";
+import Screen from "./Screen";
 
 
 export default function Experience(){
@@ -106,78 +109,54 @@ export default function Experience(){
     //     // setXRPosition(new Vector3(player.current.position.x, player.current.position.y, player.current.position.z));
     // })
 
-    function Locomotion() {
-        const rightController = useXRInputSourceState('controller', 'right');
-        const leftController = useXRInputSourceState('controller', 'left');
-        const ref = useRef(null)
-        useFrame((_, delta) => {
-          if (ref.current == null || 
-              rightController == null ||
-              leftController === null) {
-            return
-          }
-
-          const leftThumstickState = leftController.gamepad['xr-standard-thumbstick']
-          const rightThumstickState = rightController.gamepad['xr-standard-thumbstick']
-
-          if (leftThumstickState == null) {
-            return
-          }
-
-        //   console.log(ref.current)
-
-        //   ref.current.applyImpulse({x: .5, y: 0, z: 0})
-        
-          // Move
-        //   ref.current.position.x += (leftThumstickState.xAxis ?? 0) * delta
-        //   ref.current.position.z += (leftThumstickState.yAxis ?? 0) * delta
-
-          if (rightThumstickState == null) {
-            return
-          }
-
-          // Rotation
-          ref.current.rotation.y += (rightThumstickState.xAxis ?? 0) * delta
-        })
-        return <XROrigin ref={ref} />
-      }
-
     return <>
         <OrbitControls ref={camera} makeDefault />
 
-        <directionalLight ref={directionalLight} position={[0, 3, 0]} intensity={ 2 } />
-        <ambientLight intensity={1} />
+        <directionalLight castShadow ref={directionalLight} position={[2, 3, 3]} intensity={ 2 } />
+        <ambientLight intensity={.5} />
 
-        {/* <Locomotion /> */}
+        <Physics debug>
 
-        <UserMovement />
+            <Player />
 
-        <group scale={.5} ref={player} position={[0, -.5, 1]}>
-            
-        </group>
+            <Screen />
 
-        {/* <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-        <Sky distance={450000} sunPosition={[0, 1, 0]} inclination={0} azimuth={0.25} />
+            <RigidBody>
+                <mesh castShadow position={[0, 3, 2]}>
+                    <boxGeometry />
+                    <meshStandardMaterial color='yellow' />
+                </mesh>
+            </RigidBody>
 
-        <Clouds position={[-.5, 4, 1.5]} material={THREE.MeshBasicMaterial}>
-            <Cloud seed={1} segments={40} bounds={[3, 1, 3]} volume={1} speed={.5} color="lightblue"/>
-        </Clouds> */}
+            <RigidBody type="fixed">
+                <mesh receiveShadow>
+                    <boxGeometry args={[10, .5, 10]} />
+                    <meshStandardMaterial color="lightblue" />
+                </mesh>
+            </RigidBody>
 
-        {
-            rooms.map((room, index) => {
-                return <Bedroom key={index} {...room} />
-            })
-        }
+            <RigidBody type="fixed">
+                <group>
+                    <mesh position={[0, .5, -5]}>
+                        <boxGeometry args={[10.5, .5, .5]} />
+                        <meshStandardMaterial color={'blue'} />
+                    </mesh>
+                    <mesh position={[0, .5, 5]}>
+                        <boxGeometry args={[10.5, .5, .5]} />
+                        <meshStandardMaterial color={'blue'} />
+                    </mesh>
+                    <mesh position={[5, .5, 0]}>
+                        <boxGeometry args={[.5, .5, 10]} />
+                        <meshStandardMaterial color={'blue'} />
+                    </mesh>
+                    <mesh position={[-5, .5, 0]}>
+                        <boxGeometry args={[.5, .5, 10]} />
+                        <meshStandardMaterial color={'blue'} />
+                    </mesh>
+                </group>
+            </RigidBody>
 
-        
-        {/* <Bedroom position={[5, 0, 0]} />
-        <Bedroom position={[5, 0, 5]} /> */}
-
-        {/* <Cube onClick={cubeClick} color="red" position={[0, 1, 1]} />
-        <Cube onClick={cubeClick} color="blue" position={[3, 0, 3]} />
-        <Cube onClick={cubeClick} color="purple" position={[-3, 0, 1]} />
-        <Cube onClick={cubeClick} color="orange" position={[0, 1, 6]} />
-        <Cube onClick={cubeClick} color="white" position={[1, 0, -3]} /> */}
+        </Physics>
 
         {/* <Environment files="./space.hdr" background/> */}
     </>

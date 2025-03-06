@@ -42,3 +42,11 @@ canvas {
 .message-box .button {
 
 }
+
+.htmlScreen iframe {
+    width: 1124px;
+    height: 670px;
+    border: none;
+    border-radius: 20px;
+    background-color: #000000;
+}
