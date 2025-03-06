@@ -18,15 +18,21 @@ export default function Screen() {
             <planeGeometry />
             <meshStandardMaterial  color="gray"/>
         </mesh>
-        <Html 
-            transform
-            wrapperClass="htmlScreen"
-            distanceFactor={1.7}
-            position-z={.1}
-            occlude="blending"
-            >
-            <iframe ref={iframe} />
-        </Html>
+        <mesh position={[0, 0, 1]}>
+            <Root sizeX={5} sizeY={3} flexDirection="row">
+                <Container flexGrow={1} >
+                    <Html 
+                        transform
+                        wrapperClass="htmlScreen"
+                        distanceFactor={1.7}
+                        position-z={.1}
+                        occlude="blending"
+                        >
+                        <iframe ref={iframe} />
+                    </Html>
+                </Container>
+            </Root>
+        </mesh>
         <group position={[0, -3.5, 1]} scale={2}>
             <Root sizeX={1} sizeY={2} attachCamera={true}>
                 <Button onClick={visitUs}>

@@ -2,6 +2,7 @@ import { RigidBody } from "@react-three/rapier";
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
+import { XROrigin } from "@react-three/xr";
 
 export default function Player() {
     const body = useRef();
@@ -37,6 +38,7 @@ export default function Player() {
         <mesh castShadow position={[3, .6, 3]}>
             <boxGeometry />
             <meshStandardMaterial color="orange" />
+            <XROrigin />
         </mesh>
     </RigidBody>
 }
