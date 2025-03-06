@@ -10,7 +10,7 @@ export default function Screen() {
 
     function visitUs() {
         if (!iframe.current.hasAttribute('src'))
-            iframe.current.setAttribute('src', 'https://pexels.com')
+            iframe.current.setAttribute('src', 'https://sandbox1.highqa.stpdev/')
     }
 
     return <group position={[0, 3, -5]}>
