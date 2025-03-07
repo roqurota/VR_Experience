@@ -1,8 +1,9 @@
-import { RigidBody } from "@react-three/rapier";
+import { RigidBody, CapsuleCollider, CuboidCollider } from "@react-three/rapier";
 import { useAnimations, useFBX, useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { XROrigin } from "@react-three/xr";
+import { XROrigin, useXRControllerLocomotion } from "@react-three/xr";
+import * as THREE from 'three'
 
 export default function Player() {
     const body = useRef();
@@ -91,6 +92,17 @@ export default function Player() {
         setAnimationName(name)
     }
 
+    const userMove = (inputVector, rotationInfo) => {
+        if (body.current) {
+            const currentLinvel = body.current.linvel()
+            const newLinvel = { x: inputVector.x, y: currentLinvel.y, z: inputVector.z }
+            body.current.setLinvel(newLinvel, true)
+            body.current.setRotation(new THREE.Quaternion().setFromEuler(rotationInfo), true)
+        }
+    }
+
+    useXRControllerLocomotion(userMove)
+
     useFrame((state, delta) => {
         const { forward, backward, leftward, rightward } = getKeys();
 
@@ -120,12 +132,19 @@ export default function Player() {
             body.current.applyImpulse(impulse)
     })
 
-    return <RigidBody friction={1} ref={body} >
+    return <RigidBody position={[3, 2, 3]} ref={body} >
         <primitive
             object={model}
             scale={.01}
-            position={[3, .6, 3]}
+            position={[0, -.8, 0]}
+            rotation={[0, Math.PI, 0]}
+            colliders={false}
+            type='dynamic'
+            enabledRotations={[false, false, false]}
+            canSleep={false}
         />
+        <CuboidCollider args={[.2, .8, .3]} />
+        <XROrigin position={[0, .3, .5]} />
 
         {/* <mesh castShadow position={[3, .6, 3]}>
             <boxGeometry />

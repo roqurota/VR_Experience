@@ -115,7 +115,7 @@ export default function Experience(){
         <directionalLight castShadow ref={directionalLight} position={[2, 3, 3]} intensity={ 2 } />
         <ambientLight intensity={.5} />
 
-        <Physics debug>
+        <Physics>
 
             <Player />
 
