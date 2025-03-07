@@ -18,7 +18,7 @@ export default function Screen() {
             <planeGeometry />
             <meshStandardMaterial  color="gray"/>
         </mesh>
-        <mesh position={[0, 0, 1]}>
+        {/* <mesh position={[0, 0, 1]}>
             <Root sizeX={5} sizeY={3} flexDirection="row">
                 <Container flexGrow={1} >
                     <Html 
@@ -32,7 +32,7 @@ export default function Screen() {
                     </Html>
                 </Container>
             </Root>
-        </mesh>
+        </mesh> */}
         <group position={[0, -3.5, 1]} scale={2}>
             <Root sizeX={1} sizeY={2} attachCamera={true}>
                 <Button onClick={visitUs}>

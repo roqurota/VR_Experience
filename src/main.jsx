@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
 import { XR, XROrigin, createXRStore, useXRInputSourceStateContext, DefaultXRController } from '@react-three/xr'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import Experience from './Experience'
 import './App.css'
 import { KeyboardControls } from '@react-three/drei'
@@ -21,9 +21,11 @@ function App() {
         ]}
       >
         <Canvas camera={{ position:[6, 6, 6] }}>
-          <XR store={store}>
-            <Experience />
-          </XR>
+          <Suspense>
+            <XR store={store}>
+              <Experience />
+            </XR>
+          </Suspense>
         </Canvas>
       </ KeyboardControls>
     </>
