@@ -9,6 +9,7 @@ import { Fullscreen, Container } from "@react-three/uikit";
 import { Physics, RigidBody } from "@react-three/rapier";
 import Player from "./Player";
 import Screen from "./Screen";
+import Panel from "./Panel";
 
 
 export default function Experience(){
@@ -115,16 +116,25 @@ export default function Experience(){
         <directionalLight castShadow ref={directionalLight} position={[2, 3, 3]} intensity={ 2 } />
         <ambientLight intensity={.5} />
 
-        <Physics>
+        <Physics debug>
 
             <Player />
 
-            <Screen />
+            {/* <Panel /> */}
+
+            {/* <Screen /> */}
 
             <RigidBody>
                 <mesh castShadow position={[0, 3, 2]}>
                     <boxGeometry />
                     <meshStandardMaterial color='yellow' />
+                </mesh>
+            </RigidBody>
+
+            <RigidBody>
+                <mesh castShadow position={[.3, 6, 2]}>
+                    <boxGeometry />
+                    <meshBasicMaterial wireframe color='green' />
                 </mesh>
             </RigidBody>
 

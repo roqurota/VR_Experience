@@ -1,0 +1,31 @@
+<Context>
+    <Data />
+
+    <Layout type="vr">
+        <Scnee type="sphere" bg="sky">
+            <Lights>
+                <Ambient />
+                <Direct />
+            </Lights>
+
+            <Objects>
+                <Box id="Box1" onClick={"Box1Click"} >
+                <Object props={...} model={'path/to/model'} physics="1"/> 
+                <Box name="floor" />
+                <Box name="walls" />
+            </Objects>
+
+            <Users>
+                <Me model={'path/to/model'} />
+                <Guest model={'path/to/model'} />
+            </Users>
+        </Scene>
+    </Layout>
+
+    <Actions>
+        <Action name="Box1Click">
+            <Set param="Box1.Color">Red</Set>
+            <Op type="Reload" target="Box1"/>
+        </Action>
+    </Actions>
+</Context>

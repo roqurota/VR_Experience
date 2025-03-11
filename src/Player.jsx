@@ -2,10 +2,13 @@ import { RigidBody, CapsuleCollider, CuboidCollider } from "@react-three/rapier"
 import { useAnimations, useFBX, useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { XROrigin, useXRControllerLocomotion } from "@react-three/xr";
+import { XROrigin, useXR, useXRControllerLocomotion } from "@react-three/xr";
 import * as THREE from 'three'
 
 export default function Player() {
+    const { controllers } = useXR();
+    const [stickDirection, setStickDirection] = useState(null);
+
     const body = useRef();
     const [subscribeKeys, getKeys] = useKeyboardControls();
     const [animationName, setAnimationName] = useState('Idle');
@@ -92,6 +95,27 @@ export default function Player() {
         setAnimationName(name)
     }
 
+    const handleStickMovement = (controller) => {
+        if (controller) {
+          const { thumbstick } = controller.inputSource;
+          if (thumbstick) {
+            const { x, y } = thumbstick;
+
+            if (x > 0.5) {
+              setStickDirection('Right');
+            } else if (x < -0.5) {
+              setStickDirection('Left');
+            } else if (y > 0.5) {
+              setStickDirection('Up');
+            } else if (y < -0.5) {
+              setStickDirection('Down');
+            } else {
+              setStickDirection('Center');
+            }
+          }
+        }
+      };
+
     const userMove = (inputVector, rotationInfo) => {
         if (body.current) {
             const currentLinvel = body.current.linvel()
@@ -104,35 +128,41 @@ export default function Player() {
     useXRControllerLocomotion(userMove)
 
     useFrame((state, delta) => {
-        const { forward, backward, leftward, rightward } = getKeys();
+        // const { forward, backward, leftward, rightward } = getKeys();
 
-        const impulse = { x: 0, y: 0, z: 0 };
-        const impulseStrength = 20 * delta;
+        // const impulse = { x: 0, y: 0, z: 0 };
+        // const impulseStrength = 20 * delta;
 
-        // console.log(animationName)
+        // // console.log(animationName)
 
-        if (forward) {
-            // console.log('here')
-            // impulse.z -= impulseStrength;
-        }
+        // if (forward) {
+        //     // console.log('here')
+        //     // impulse.z -= impulseStrength;
+        // }
 
-        if (backward) {
-            // impulse.z += impulseStrength;
-        }
+        // if (backward) {
+        //     // impulse.z += impulseStrength;
+        // }
 
-        if (leftward) {
-            // impulse.x -= impulseStrength;
-        }
+        // if (leftward) {
+        //     // impulse.x -= impulseStrength;
+        // }
 
-        if (rightward) {
-            // impulse.x += impulseStrength;
-        }
+        // if (rightward) {
+        //     // impulse.x += impulseStrength;
+        // }
 
-        if (body.current)
-            body.current.applyImpulse(impulse)
+        // if (body.current)
+        //     body.current.applyImpulse(impulse)
+
+        // if (controllers) {
+        //     const controller = controllers[0];
+    
+        //     console.log(controller)
+        // }
     })
 
-    return <RigidBody position={[3, 2, 3]} ref={body} >
+    return <RigidBody position={[3, 2, 3]} ref={body} colliders={false} >
         <primitive
             object={model}
             scale={.01}
