@@ -1,31 +1,27 @@
 import { createRoot } from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
-import { XR, createXRStore, useXRInputSourceState, useXRInputSourceStateContext } from '@react-three/xr'
+import { XR, createXRStore, useXRInputSourceState, useXRInputSourceStateContext, DefaultXRController } from '@react-three/xr'
 import { Suspense, useState } from 'react'
 import Experience from './Experience'
 import './App.css'
 import { KeyboardControls } from '@react-three/drei'
 import Checkers from './Checkers'
+import RightHand from './RightHand'
+import LeftHand from './LeftHand'
 
 const store = createXRStore(
-//   {
-//   hand: {
-//     right: () => {
-//       const state = useXRInputSourceState('hand', 'right')
-
-//       console.log(state)
-
-//       return (
-        
-//           <mesh>
-//             <boxGeometry />
-//             <meshStandardMaterial color="red"/>
-//           </mesh>
-        
-//       )
-//     },
-//   },
-// }
+  {
+  secondaryInputSources: true,
+  controller: {
+    left: () => {
+      return <LeftHand />
+    },
+    right: () => {
+      return <RightHand />
+    }
+  },
+  
+}
 );
 
 function App() {
@@ -40,7 +36,8 @@ function App() {
           { name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
         ]}
       >
-        <Canvas camera={{ position:[6, 6, 6] }}>
+        
+        <Canvas camera={{ position:[3, 3, 3] }}>
           <Suspense>
             <XR store={store}>
               {/* <Experience /> */}
