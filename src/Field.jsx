@@ -2,11 +2,11 @@ import { useTexture } from "@react-three/drei"
 
 export default function Field({ properties }) {
     const texture = useTexture({
-        map: './textures/wood/wood_color.jpg',
-        aoMap: './textures/wood/wood_ao.jpg',
-        metalnessMap: './textures/wood/wood_metalness.jpg',
-        normalMap: './textures/wood/wood_normal.jpg',
-        roughnessMap: './textures/wood/wood_roughness.jpg',
+        map: '/wood_color.jpg',
+        aoMap: '/wood_ao.jpg',
+        metalnessMap: '/wood_metalness.jpg',
+        normalMap: '/wood_normal.jpg',
+        roughnessMap: '/wood_roughness.jpg',
     })
 
     return <>
