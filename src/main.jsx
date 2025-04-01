@@ -19,14 +19,7 @@ const store = createXRStore({
       return <RightHand />
     }
   },
-  hand: {
-    left: () => {
-      return <LeftHand />
-    },
-    right: () => {
-      return <RightHand />
-    }
-  }
+  hand: false
 }
 );
 
