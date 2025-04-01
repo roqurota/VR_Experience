@@ -9,8 +9,7 @@ import Checkers from './Checkers'
 import RightHand from './RightHand'
 import LeftHand from './LeftHand'
 
-const store = createXRStore(
-  {
+const store = createXRStore({
   secondaryInputSources: true,
   controller: {
     left: () => {
@@ -20,7 +19,6 @@ const store = createXRStore(
       return <RightHand />
     }
   },
-  
 }
 );
 
