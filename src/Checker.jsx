@@ -8,9 +8,9 @@ import * as THREE from 'three';
 export default function Checker({ properties }) {
     
     const texture = useTexture({
-        map: './textures/tile/tile_color.jpg',
-        normalMap: './textures/tile/tile_norm.jpg',
-        roughnessMap: './textures/tile/tile_rough.jpg'
+        map: 'tile_color.jpg',
+        normalMap: 'tile_norm.jpg',
+        roughnessMap: 'tile_rough.jpg'
     })
 
     const [isDragging, setDraggingState] = useState(false);
