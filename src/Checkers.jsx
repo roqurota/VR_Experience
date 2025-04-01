@@ -14,9 +14,9 @@ export default function Checkers() {
     const seaPlane = useRef();
 
     const texture = useTexture({
-        map: './textures/marble/marble_col.jpg',
-        normalMap: './textures/marble/marbel_nor.jpg',
-        roughnessMap: './textures/marble/marbel_rough.jpg'
+        map: '/textures/marble/marble_col.jpg',
+        normalMap: '/textures/marble/marbel_nor.jpg',
+        roughnessMap: '/textures/marble/marbel_rough.jpg'
     })
 
     const model = {
