@@ -287,11 +287,11 @@ export default function Checkers() {
 
         <XROrigin position={[5, 2, 0]}/>
 
-        {/* <Environment
+        <Environment
             path="./public/skybox/"
             files={['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png']} 
             background={true}
-        /> */}
+        />
 
         <Physics gravity={[0, -2, 0]}>
             <RigidBody type="fixed">
