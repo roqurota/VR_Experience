@@ -20,8 +20,7 @@ const store = createXRStore({
     }
   },
   hand: false
-}
-);
+});
 
 function App() {
   return (
@@ -36,7 +35,7 @@ function App() {
         ]}
       >
         
-        <Canvas camera={{ position:[3, 3, 3] }}>
+        <Canvas camera={{ position:[5, 4, 0] }}>
           <Suspense>
             <XR store={store}>
               {/* <Experience /> */}

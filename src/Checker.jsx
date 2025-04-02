@@ -1,11 +1,15 @@
-import { useTexture } from "@react-three/drei";
+import { Float, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { CylinderCollider, RigidBody, quat, vec3, euler } from "@react-three/rapier";
-import { useRayPointer } from "@react-three/xr";
+import { useXR, useXRInputSourceState } from "@react-three/xr";
 import { useEffect, useRef, useState } from "react";
+import { Handle } from "@react-three/handle";
+
+
 import * as THREE from 'three';
 
 export default function Checker({ properties }) {
+
     
     const texture = useTexture({
         map: 'tile_color.jpg',
@@ -16,6 +20,52 @@ export default function Checker({ properties }) {
     const [isDragging, setDraggingState] = useState(false);
     const meshRef = useRef(null)
     const pointerOffset = useRef(null);
+
+    const [isHover, setHover] = useState(false);
+    const [isSelected, setSelection] = useState(false);
+    const groupRef = useRef(null);
+
+    useFrame((state) => {
+        // groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, isSelected ? .4 : 0, 0.1)
+
+        // const newPosition = state.camera.getWorldPosition(new THREE.Vector3());
+
+        // groupRef.current.position.lerp(newPosition, isSelected ? .1 : 0)
+        
+        // new THREE.MathUtils.lerp
+    })
+
+    return <>
+        <Handle>
+            <group ref={groupRef}
+                // onPointerEnter={() => {setHover(true)}}
+                // onPointerLeave={() => {setHover(false)}}
+                // onPointerDown={() => {
+                //     setSelection(!isSelected);
+                // }}
+                
+            >   
+                    <mesh 
+                        ref={meshRef} 
+                        position={[properties.x, 1, properties.z]}>
+                        <cylinderGeometry args={[properties.size / 2, properties.size / 2, .3]} />
+                        <meshStandardMaterial {...texture} color={properties.color} />
+                    </mesh>
+                    <mesh 
+                        position={[properties.x, 1.05, properties.z]}>
+                        <cylinderGeometry args={[properties.size / 2.2, properties.size / 2.2, .3]} />
+                        <meshStandardMaterial {...texture} color={properties.color} />
+                    </mesh>
+                {
+                    isHover ? 
+                        <mesh position={[properties.x, 2, properties.z]}>
+                            <sphereGeometry args={[.1, 15, 15]}/>
+                            <meshStandardMaterial />
+                        </mesh> : null
+                }
+            </group>
+        </ Handle >
+    </>
 
     // const onPointerDown = (event) => {
     //     if (isDragging)
@@ -55,20 +105,6 @@ export default function Checker({ properties }) {
     // }, [])
 
     // console.log(properties)
-
-    return <>
-        <mesh 
-            ref={meshRef} 
-            position={[properties.x, 1, properties.z]}>
-            <cylinderGeometry args={[properties.size / 2, properties.size / 2, .3]} />
-            <meshStandardMaterial {...texture} color={properties.color} />
-        </mesh>
-        <mesh 
-            position={[properties.x, 1.05, properties.z]}>
-            <cylinderGeometry args={[properties.size / 2.2, properties.size / 2.2, .3]} />
-            <meshStandardMaterial {...texture} color={properties.color} />
-        </mesh>
-    </>
     
     
     // <>

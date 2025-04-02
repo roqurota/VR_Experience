@@ -285,7 +285,7 @@ export default function Checkers() {
         <directionalLight castShadow ref={directionalLight} position={[2, 3, 3]} intensity={ 2 } />
         <ambientLight intensity={3} />
 
-        {/* <XROrigin position={[6, 2, 4]}/> */}
+        <XROrigin position={[5, 2, 0]}/>
 
         {/* <Environment
             path="./public/skybox/"
