@@ -20,8 +20,6 @@
     "@react-three/xr": "^6.6.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-spring": "^9.7.5",
-    "react-springs": "^1.1.0",
     "three": "^0.173.0",
     "three-mesh-ui": "^6.5.4"
   },
