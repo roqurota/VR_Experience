@@ -288,7 +288,7 @@ export default function Checkers() {
         <XROrigin position={[5, 2, 0]}/>
 
         <Environment
-            path="./public/skybox/"
+            path="/"
             files={['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png']} 
             background={true}
         />
