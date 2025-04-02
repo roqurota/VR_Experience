@@ -280,7 +280,7 @@ export default function Checkers() {
     })
 
     return <>
-        <OrbitControls ref={camera} makeDefault />
+        {/* <OrbitControls ref={camera} makeDefault /> */}
 
         <directionalLight castShadow ref={directionalLight} position={[2, 3, 3]} intensity={ 2 } />
         <ambientLight intensity={3} />
@@ -293,7 +293,7 @@ export default function Checkers() {
             background={true}
         /> */}
 
-        <Physics>
+        <Physics gravity={[0, -2, 0]}>
             <RigidBody type="fixed">
                 <mesh>
                     <boxGeometry args={[9, .1, 9]} />
@@ -316,7 +316,7 @@ export default function Checkers() {
                 }
             </group>
             
-            <group position-y={-.8}>
+            <group position-y={1}>
                 {
                     model.checkers.map((el, index) => {
                         return <Checker properties={el} key={index} />
