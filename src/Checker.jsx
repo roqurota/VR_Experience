@@ -4,6 +4,7 @@ import { CylinderCollider, RigidBody, quat, vec3, euler } from "@react-three/rap
 import { useXR, useXRInputSourceState } from "@react-three/xr";
 import { useEffect, useRef, useState } from "react";
 import { Handle } from "@react-three/handle";
+import { useCheckerStore } from "./Store";
 
 import * as THREE from 'three';
 
@@ -14,41 +15,90 @@ export default function Checker({ properties }) {
         roughnessMap: 'tile_rough.jpg'
     })
 
-    const meshRef = useRef(null)
+    const { selectedChecker, selectChecker } = useCheckerStore();
 
-    const [isHover, setHover] = useState(false);
-    const rigidBodyRef = useRef(null);
-    const handleRef = useRef(null);
+    const groupRef = useRef(null);
 
+    const propertiesColor = properties.type === 'white' ? 'white' : 'brown';
+    const [color, setColor] = useState(propertiesColor);
+    const [selected, setSelection] = useState(false);
+
+    useEffect(() => {
+        if (isCheckerSelected())
+            selectCheckerUI();
+        else
+            deselectCheckerUI();
+    }, [selectedChecker]);
 
     useFrame(() => {
-        // const handlePosition = handleRef.current.target.current.position;
-        // rigidBodyRef.current.translation(handlePosition)
-        // console.log(rigidBodyRef.current)
+        groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, selected ? .4 : 0, 0.1)
+        groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, properties.x, 0.1)
+        groupRef.current.position.z = THREE.MathUtils.lerp(groupRef.current.position.z, properties.z, 0.1)
     })
 
+    const onPointerEnter = () => {
+        if (!selected)
+            setColor('orange');
+    }
+
+    const onPointerLeave = () => {
+        if (!selected)
+            setColor(propertiesColor);
+    }
+
+    const isCheckerSelected = () => {
+        return useCheckerStore.getState().selectedChecker.row === properties.row && useCheckerStore.getState().selectedChecker.col === properties.col;
+    }
+
+    
+    const onClick = () => {
+        if (isCheckerSelected()) {
+            selectChecker({
+                row: -1,
+                col: -1,
+                type: 'white'
+            })
+        } else {
+            selectChecker({
+                row: properties.row,
+                col: properties.col,
+                type: properties.type
+            })
+        }
+    }
+
+    const selectCheckerUI = () => {
+        setSelection(true);
+
+        setColor('cyan');
+    }
+
+    const deselectCheckerUI = () => {
+        setSelection(false);
+
+        setColor(propertiesColor);
+    }
     return <>
-        <Handle ref={handleRef}>
-            <RigidBody ref={rigidBodyRef} colliders={'hull'} gravityScale={4}>
+        {/* <Handle ref={handleRef}> */}
+            {/* <RigidBody ref={rigidBodyRef} colliders={'hull'} gravityScale={4}> */}
+            <group 
+                ref={groupRef}
+                onPointerEnter={onPointerEnter}
+                onPointerLeave={onPointerLeave}
+                onClick={onClick}
+            >
                 <mesh 
-                    ref={meshRef} 
-                    position={[properties.x, 1, properties.z]}>
+                    position-y={1} >
                     <cylinderGeometry args={[properties.size / 2, properties.size / 2, .3]} />
-                    <meshStandardMaterial {...texture} color={properties.color} />
+                    <meshStandardMaterial {...texture} color={color} />
                 </mesh>
                 <mesh 
-                    position={[properties.x, 1.05, properties.z]}>
+                    position-y={1.1}>
                     <cylinderGeometry args={[properties.size / 2.2, properties.size / 2.2, .3]} />
-                    <meshStandardMaterial {...texture} color={properties.color} />
+                    <meshStandardMaterial {...texture} color={color} />
                 </mesh>
-                {
-                    isHover ? 
-                        <mesh position={[properties.x, 2, properties.z]}>
-                            <sphereGeometry args={[.1, 15, 15]}/>
-                            <meshStandardMaterial />
-                        </mesh> : null
-                }
-            </RigidBody>
-        </ Handle >
+            </group>
+            {/* </RigidBody> */}
+        {/* </ Handle > */}
     </>
 }

@@ -7,6 +7,7 @@ import Checker from "./Checker";
 import Field from "./Field";
 import { extend, useFrame } from "@react-three/fiber";
 import Water from "./shaders/Water";
+import Desk from "./Desk";
 
 export default function Checkers() {
     const camera = useRef();
@@ -70,48 +71,77 @@ export default function Checkers() {
             //     color: 'black'
             // },
         ],
-        fields: []
+        matrix: {}
     }
 
-    for (let i = 0; i < 8; i++)
+    let currentIndex = 1;
+
+    for (let i = 0; i < 8; i++) {
+        model.matrix[i] = {};
         for (let j = 0; j < 8; j++) {
-            let field = {};
+            model.matrix[i][j] = {};
+
+            let field = model.matrix[i][j];
             let size = 1;
 
             field.x = size * i - 3.5;
             field.z = size * j - 3.5;
             field.size = size;
             field.type = (j + i) % 2 === 0 ? 'black' : 'white';
+            field.row = i;
+            field.col = j;
+            field.index = currentIndex;
 
-            model.fields.push(field);
+            if (field.type === 'black')
+                currentIndex++;
+
+            if ((i <= 2 || i >= 5) && (j + i) % 2 === 0) {
+                field.checker = {
+                    x: field.x,
+                    z: field.z,
+                    initialX: field.x,
+                    initialZ: field.z,
+                    size: field.size - 0.1,
+                    row: i,
+                    col: j
+                };
+
+                if (i <= 2)
+                    field.checker.type = 'black';
+                else if (i >= 5)
+                    field.checker.type = 'white';
+            }
         }
-
-    const blackCheckers = model.fields.filter(el => el.type === 'black');
-    const whiteCheckers = model.fields.reverse().filter(el => el.type === 'black');
-
-    for (let i = 0; i < 12; i++) {
-        let checker = {};
-        let field = blackCheckers[i];
-
-        checker.x = field.x;
-        checker.z = field.z;
-        checker.size = field.size - .1;
-        checker.color = 'gray';
-
-        model.checkers.push(checker);
     }
 
-    for (let i = 0; i < 12; i++) {
-        let checker = {};
-        let field = whiteCheckers[i];
+    console.log(model)
 
-        checker.x = field.x;
-        checker.z = field.z;
-        checker.size = field.size - .1;
-        checker.color = 'brown';
+    // const whiteCheckers = model.fields.filter(el => el.type === 'white');
+    // const blackCheckers = model.fields.reverse().filter(el => el.type === 'white');
 
-        model.checkers.push(checker);
-    }
+    // for (let i = 0; i < 12; i++) {
+    //     let checker = {};
+    //     let field = blackCheckers[i];
+
+    //     checker.x = field.x;
+    //     checker.z = field.z;
+    //     checker.size = field.size - .1;
+    //     checker.color = 'gray';
+
+    //     model.checkers.push(checker);
+    // }
+
+    // for (let i = 0; i < 12; i++) {
+    //     let checker = {};
+    //     let field = whiteCheckers[i];
+
+    //     checker.x = field.x;
+    //     checker.z = field.z;
+    //     checker.size = field.size - .1;
+    //     checker.color = 'brown';
+
+    //     model.checkers.push(checker);
+    // }
 
     const SeaMaterial = shaderMaterial(
         { 
@@ -280,18 +310,18 @@ export default function Checkers() {
     })
 
     return <>
-        {/* <OrbitControls ref={camera} makeDefault /> */}
+        <OrbitControls ref={camera} makeDefault />
 
         <directionalLight castShadow ref={directionalLight} position={[2, 3, 3]} intensity={ 2 } />
         <ambientLight intensity={3} />
 
         <XROrigin position={[5, 2, 0]}/>
 
-        <Environment
+        {/* <Environment
             path="/"
             files={['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png']} 
             background={true}
-        />
+        /> */}
 
         <Physics gravity={[0, -2, 0]}>
             <RigidBody type="fixed">
@@ -303,26 +333,15 @@ export default function Checkers() {
 
             {/* <Water /> */}
 
-            <mesh ref={seaPlane} position-y={-1} rotation-x={ -Math.PI * .5 } >
-                <planeGeometry args={[5, 5, 512, 512]} />
-                <seaMaterial side={ THREE.DoubleSide } color="red" time={1} />
-            </mesh>
-
-            <group position-y={-.94}>
-                {
-                    model.fields.map((el, index) => {
-                        return <Field properties={el} key={index} />
-                    })
-                }
-            </group>
+            <Desk model={model} />
             
-            <group position-y={1}>
+            {/* <group position-y={1}>
                 {
                     model.checkers.map((el, index) => {
                         return <Checker properties={el} key={index} />
                     })
                 }
-            </group>
+            </group> */}
         </Physics>
     </>
 }
