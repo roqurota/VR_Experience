@@ -1,0 +1,24 @@
+<Context>
+  <Layout width="700" height="300">
+    <Group class="workspace-main-pane">
+      <Group class="columns" margin-top="30" margin-left="10">
+        <Group class="left-column" width="300">
+          <Field displayname-visible="0">
+            <Text>Ivanov Ivan</Text>
+          </Field>
+          <Field displayname="Score" class="style-b">
+            <Text>10</Text>
+          </Field>
+        </Group>
+        <Group class="left-column" width="300">
+          <Field displayname-visible="0">
+            <Text>Petrov Petr</Text>
+          </Field>
+          <Field displayname="Score" class="style-b">
+            <Text>5</Text>
+          </Field>
+        </Group>
+      </Group>
+    </Group>
+  </Layout>
+</Context>

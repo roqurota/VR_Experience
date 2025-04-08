@@ -8,6 +8,7 @@ import Field from "./Field";
 import { extend, useFrame } from "@react-three/fiber";
 import Water from "./shaders/Water";
 import Desk from "./Desk";
+import Screen from "./Screen";
 
 export default function Checkers() {
     const camera = useRef();
@@ -114,7 +115,7 @@ export default function Checkers() {
         }
     }
 
-    console.log(model)
+    // console.log(model)
 
     // const whiteCheckers = model.fields.filter(el => el.type === 'white');
     // const blackCheckers = model.fields.reverse().filter(el => el.type === 'white');
@@ -322,6 +323,8 @@ export default function Checkers() {
             files={['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png']} 
             background={true}
         /> */}
+
+        <Screen />
 
         <Physics gravity={[0, -2, 0]}>
             <RigidBody type="fixed">
