@@ -1,4 +1,4 @@
-import { Html } from "@react-three/drei";
+import { Html, RoundedBox, Float } from "@react-three/drei";
 import { Container, Root, Text } from "@react-three/uikit";
 import { Button } from "@react-three/uikit-default";
 import { useEffect, useRef, useState } from "react";
@@ -40,15 +40,14 @@ export default function Screen() {
         const isColumn = element.attributes.class && element.attributes.class === 'left-column';
 
         return element.name === 'Text' ? 
-            <Text>
+            <Text fontWeight={'bold'} color={'white'} padding={1}>
                 { element.value }
             </Text> :
             <Container 
                 flexDirection={isColumn ? 'column' : 'row' } 
                 flexGrow={isColumn ? 1 : 0}
-                gap={isColumns ? 10: 0}
+                padding={1}
                 justifyContent={isColumns ? 'space-between' : 'center'}
-                backgroundColor={isColumn ? 'lightgray' : ''}
                 key={key.current}>
                 {
                     element.children.length ? element.children.map((el) => {
@@ -58,11 +57,18 @@ export default function Screen() {
             </Container>
     }
 
-    return <group position={[3, 3, 0]} rotation-y={-Math.PI * 1.5}>
-        <Root sizeX={2} sizeY={1} flexDirection={'column'}>
-            {
-                xml ? parseXML(xml) : null
-            }
-        </Root>
+    return <group position={[0, 3, 4]} rotation-y={-Math.PI}>
+        <Float speed={2}>
+            <group position-z={.06}>
+                <Root backgroundColor={'black'} sizeX={2.4} sizeY={.9} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
+                    {
+                        xml ? parseXML(xml) : null
+                    }
+                </Root>
+            </group>
+            <RoundedBox args={[2.5, 1, .1]}>
+                <meshPhongMaterial color="lightgray" />
+            </RoundedBox>
+        </Float>
     </group>
 }

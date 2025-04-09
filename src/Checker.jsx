@@ -18,6 +18,7 @@ export default function Checker({ properties }) {
     const { selectedChecker, selectChecker } = useCheckerStore();
 
     const groupRef = useRef(null);
+    const sound = useRef(null);
 
     const propertiesColor = properties.type === 'white' ? 'white' : 'brown';
     const [color, setColor] = useState(propertiesColor);
@@ -29,6 +30,17 @@ export default function Checker({ properties }) {
         else
             deselectCheckerUI();
     }, [selectedChecker]);
+
+    useEffect(() => {
+        sound.current = new Audio('./sound_take_checker.wav');
+        sound.current.preload = 'auto';
+        sound.current.volume = '0.3';
+
+        return () => {
+            sound.current.pause();
+            sound.current = null;
+        }
+    }, []);
 
     useFrame(() => {
         groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, selected ? .4 : 0, 0.1)
@@ -69,6 +81,9 @@ export default function Checker({ properties }) {
 
     const selectCheckerUI = () => {
         setSelection(true);
+
+        if (sound.current)
+            sound.current.play();
 
         setColor('cyan');
     }

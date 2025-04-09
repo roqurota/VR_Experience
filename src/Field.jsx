@@ -1,6 +1,6 @@
 import { Text, useTexture } from "@react-three/drei"
 import { useCheckerStore } from "./Store";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Field({ properties, model }) {
     const texture = useTexture({
@@ -11,13 +11,23 @@ export default function Field({ properties, model }) {
         roughnessMap: '/wood_roughness.jpg',
     })
 
-    // console.log(properties)
-
     const { selectedChecker, selectChecker } = useCheckerStore();
 
     let propertiesColor = properties.type === 'black' ? 'brown' : 'orange';
     const [color, setColor] = useState(propertiesColor);
     const [active, setActive] = useState(false);
+    const sound = useRef(null);
+
+    useEffect(() => {
+        sound.current = new Audio('./sound_place_checker.wav');
+        sound.current.preload = 'auto';
+        sound.current.volume = '0.3';
+
+        return () => {
+            sound.current.pause();
+            sound.current = null;
+        }
+    }, []);
 
     const isFieldActive = () => {
         if (properties.type === 'white')
@@ -106,7 +116,8 @@ export default function Field({ properties, model }) {
             type: 'white'
         })
 
-        console.log(checker)
+        if (sound.current)
+            sound.current.play();
     }
 
     return <>
