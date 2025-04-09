@@ -9,6 +9,7 @@ import { extend, useFrame } from "@react-three/fiber";
 import Water from "./shaders/Water";
 import Desk from "./Desk";
 import Screen from "./Screen";
+import UserMovement from "./UserMovement";
 
 export default function Checkers() {
     const camera = useRef();
@@ -314,7 +315,7 @@ export default function Checkers() {
         <OrbitControls ref={camera} makeDefault />
 
         <directionalLight castShadow ref={directionalLight} position={[2, 3, 3]} intensity={ 2 } />
-        <ambientLight intensity={3} />
+        <ambientLight intensity={5} />
 
         <XROrigin position={[5, 2, 0]}/>
 
@@ -325,6 +326,8 @@ export default function Checkers() {
         /> */}
 
         <Screen />
+
+        <UserMovement position={new THREE.Vector3(5, 2, 0)} />
 
         <Physics gravity={[0, -2, 0]}>
             <RigidBody type="fixed">

@@ -20,7 +20,7 @@ export default function Checker({ properties }) {
     const groupRef = useRef(null);
     const sound = useRef(null);
 
-    const propertiesColor = properties.type === 'white' ? 'white' : 'brown';
+    const propertiesColor = properties.type === 'white' ? 'lightgray' : 'brown';
     const [color, setColor] = useState(propertiesColor);
     const [selected, setSelection] = useState(false);
 

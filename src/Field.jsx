@@ -13,7 +13,7 @@ export default function Field({ properties, model }) {
 
     const { selectedChecker, selectChecker } = useCheckerStore();
 
-    let propertiesColor = properties.type === 'black' ? 'brown' : 'orange';
+    let propertiesColor = properties.type === 'black' ? '#a16423' : '#d8a663';
     const [color, setColor] = useState(propertiesColor);
     const [active, setActive] = useState(false);
     const sound = useRef(null);
@@ -138,7 +138,7 @@ export default function Field({ properties, model }) {
             rotation-x={ -Math.PI * 0.5 }
             scale={properties.size}>
             <planeGeometry />
-            <meshStandardMaterial roughness={.5} metalness={2} {...texture} color={color}  /> 
+            <meshStandardMaterial {...texture} color={color}  /> 
         </mesh>
     </>
 }

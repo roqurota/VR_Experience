@@ -23,9 +23,6 @@ export default function Screen() {
     const parseXML = (xml) => {
         let parsedXML = new XMLParser().parseFromString(xml);
 
-        console.log(xml)
-        console.log(parsedXML)
-
         let item = parseElement(parsedXML, 0);
 
         return item;
@@ -40,7 +37,7 @@ export default function Screen() {
         const isColumn = element.attributes.class && element.attributes.class === 'left-column';
 
         return element.name === 'Text' ? 
-            <Text fontWeight={'bold'} color={'white'} padding={1}>
+            <Text fontWeight={'bold'} color={'white'} padding={1} key={key.current}>
                 { element.value }
             </Text> :
             <Container 
