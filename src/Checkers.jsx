@@ -319,15 +319,15 @@ export default function Checkers() {
 
         <XROrigin position={[5, 2, 0]}/>
 
-        {/* <Environment
+        <Environment
             path="/"
             files={['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png']} 
             background={true}
-        /> */}
+        />
 
         <Screen />
 
-        <UserMovement position={new THREE.Vector3(5, 2, 0)} />
+        <UserMovement position={new THREE.Vector3(5, 3, 0)} />
 
         <Physics gravity={[0, -2, 0]}>
             <RigidBody type="fixed">
