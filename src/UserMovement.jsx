@@ -7,7 +7,7 @@ export default function UserMovement({ position }) {
     useXRControllerLocomotion(originRef, { speed: 5}, { type: 'snap' });
     return <group position={position} ref={originRef}>
         <mesh>
-            <boxGeometry args={[.2, 1, 1]} />
+            <boxGeometry args={[.2, 1, .2]} />
             <meshStandardMaterial color={'yellow'} />
         </mesh>
         <XROrigin />
