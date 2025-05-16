@@ -5,8 +5,8 @@ import { useXR, useXRInputSourceState } from "@react-three/xr";
 import { useEffect, useRef, useState } from "react";
 import { Handle } from "@react-three/handle";
 import { useCheckerStore } from "./Store";
-
 import * as THREE from 'three';
+import { socket } from "./SocketManager";
 
 export default function Checker({ properties }) {
     const texture = useTexture({
@@ -77,6 +77,12 @@ export default function Checker({ properties }) {
                 type: properties.type
             })
         }
+
+        socket.emit('serverSelectChecker', {
+            row: properties.row,
+            col: properties.col,
+            type: properties.type
+        })
     }
 
     const selectCheckerUI = () => {

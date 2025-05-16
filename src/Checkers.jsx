@@ -10,11 +10,16 @@ import Water from "./shaders/Water";
 import Desk from "./Desk";
 import Screen from "./Screen";
 import UserMovement from "./UserMovement";
+import { useUsersStore } from "./Store";
 
 export default function Checkers() {
     const camera = useRef();
     const directionalLight = useRef();
     const seaPlane = useRef();
+
+    const { users } = useUsersStore();
+
+    console.log(users)
 
     const texture = useTexture({
         map: '/marble_col.jpg',
@@ -321,11 +326,20 @@ export default function Checkers() {
 
         <Environment
             path="/"
-            files={['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png']} 
+            files={['cube_left.png', 'cube_right.png', 'cube_up.png', 'cube_down.png', 'cube_front.png', 'cube_back.png']} 
             background={true}
         />
 
         <Screen />
+
+        {
+            Object.keys(users).map((user, index) => {
+                return <mesh key={users[user].id} position={[index, 1, 5]}>
+                    <boxGeometry args={[.8, 1, 1]} />
+                    <meshBasicMaterial color={users[user].color} />
+                </mesh>
+            })
+        }
 
         <UserMovement position={new THREE.Vector3(5, 3, 0)} />
 

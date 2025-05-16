@@ -8,6 +8,7 @@ import { KeyboardControls } from '@react-three/drei'
 import Checkers from './Checkers'
 import RightHand from './RightHand'
 import LeftHand from './LeftHand'
+import { SocketManager } from './SocketManager'
 
 const store = createXRStore({
   secondaryInputSources: true,
@@ -34,7 +35,7 @@ function App() {
           { name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
         ]}
       >
-        
+        <SocketManager />
         <Canvas camera={{ position:[5, 4, 0] }} events={noEvents}>
           <PointerEvents />
           <Suspense>

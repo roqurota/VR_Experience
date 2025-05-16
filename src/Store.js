@@ -10,3 +10,10 @@ export const useCheckerStore = create((set) => ({
         selectedChecker: { ...state.selectedChecker, ...checker }
     }))
 }))
+
+export const useUsersStore = create((set) => ({
+    users: [],
+    setUsers: (users) => set((state) => ({
+        users: { ...state.users, ...users }
+    }))
+}))
